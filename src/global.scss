@@ -1,0 +1,18 @@
+.__dumi-default-navbar-logo:not([data-plaintext]) {
+  padding-left: 80px;
+}
+
+@media only screen and (max-width: 767px) {
+  .__dumi-default-layout-features > dl[style*='background-image'] {
+    padding: 0 0 0 90px;
+  }
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+ul[role='slug-list'] li[data-depth='3'] {
+  padding-left: 20px;
+}
