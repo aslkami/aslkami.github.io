@@ -1,0 +1,28 @@
+.container {
+  height: 300px;
+}
+
+.content-wrapper {
+  height: 254px;
+  margin-top: -16px;
+  padding: 20px;
+  overflow: auto;
+  background-color: lightblue;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.content-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 156px;
+  height: 156px;
+  // margin-bottom: 12px;
+  color: #fff;
+  font-size: 24px;
+  background-color: lightcoral;
+}
