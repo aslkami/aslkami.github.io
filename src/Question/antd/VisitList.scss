@@ -1,0 +1,18 @@
+.VisitList {
+  .list-wrapper {
+  }
+  .list-item {
+  }
+  .list-content {
+    display: flex;
+    .tag {
+      flex: none;
+    }
+    .title {
+      flex: 1;
+    }
+  }
+  .time {
+    text-align: right;
+  }
+}
