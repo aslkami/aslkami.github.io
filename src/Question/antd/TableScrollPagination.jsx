@@ -55,7 +55,7 @@ function TableScrollPagination(props) {
     if (!tableRef.current) return false;
   };
 
-  console.log(tableData, tableColumn);
+  // console.log(tableData, tableColumn);
 
   return (
     <div onScrollCapture={onScrollCapture}>
