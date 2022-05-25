@@ -59,7 +59,7 @@ const data = [
 ];
 
 function ModalSetTarget(props) {
-  const { visible = true, onCancel, onOk } = props;
+  const { visible = false, onCancel, onOk } = props;
   const [season, setSeason] = useState(1);
   const [company, setCompany] = useState('');
   const [initialData, setInitialData] = useState({});
