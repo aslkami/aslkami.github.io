@@ -3,7 +3,8 @@
 }
 
 .content-wrapper {
-  height: 254px;
+  // width: 320px;
+  height: 300px;
   margin-top: -16px;
   padding: 20px;
   overflow: auto;
@@ -17,11 +18,18 @@
 
 .content-item {
   display: flex;
+  // width: 156px;
+  // min-width: 156px;
+  // max-width: 30%;
+  flex: 30%;
+  // flex-basis: 156px;
   align-items: center;
   justify-content: center;
-  width: 156px;
+  min-width: 156px;
+  max-width: 30%;
   height: 156px;
-  // margin-bottom: 12px;
+  // margin-right: 12px;
+  margin-bottom: 12px;
   color: #fff;
   font-size: 24px;
   background-color: lightcoral;
