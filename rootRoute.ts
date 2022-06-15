@@ -26,7 +26,15 @@ export default {
           title: 'hexo 博客',
           path: 'https://aslkami.netlify.app',
         },
+        {
+          title: '基金学习',
+          path: '/fund',
+        },
       ],
+    },
+    {
+      title: 'GitHub',
+      path: 'https://github.com/aslkami/aslkami.github.io',
     },
   ],
   menus: {
