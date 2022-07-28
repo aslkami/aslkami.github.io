@@ -1,12 +1,14 @@
 import BaseRoute from './src/Base/route';
 import NodeRoute from './src/Node/route';
 import OperationMaintenanceRoute from './src/OperationMaintenance/route';
+import PackToolRoute from './src/PackTool/route';
 
 export default {
   navs: [
     ...BaseRoute.navs,
     ...NodeRoute.navs,
     ...OperationMaintenanceRoute.navs,
+    ...PackToolRoute.navs,
     {
       title: '问题汇总',
       path: '/question',
