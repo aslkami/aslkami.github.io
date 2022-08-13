@@ -26,6 +26,19 @@ export default {
         path: '/node/buffer',
       },
       {
+        title: '流',
+        path: '/node/stream',
+        children: [
+          '/Node/Stream/readable.md',
+          '/Node/Stream/writeable.md',
+          '/Node/Stream/pipe.md',
+          '/Node/Stream/duplex.md',
+          '/Node/Stream/transform.md',
+          '/Node/Stream/objectMode.md',
+          '/Node/Stream/through2.md',
+        ],
+      },
+      {
         title: '链表',
         path: '/node/link-list',
       },

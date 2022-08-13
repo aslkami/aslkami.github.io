@@ -16,8 +16,14 @@
 
 [flex 左对齐](https://www.zhangxinxu.com/wordpress/2019/08/css-flex-last-align/)
 
-## demo
+- demo
 
 <code src="./flex_antd_tabs.jsx" />
 
 - 需要注意的是 `.ant-tabs-tabpane` 布局 是 `flex: none`，意味着超出容器高度，将会超出容器展示，不会被包裹，所以需要指定 `container` 的高度
+
+## flex 1 的问题
+
+当高度不定的时候 使用 flex: 1, 放大缩小浏览器的时候，flex 1 的内容不会自适应
+
+解决：指定容器高度
