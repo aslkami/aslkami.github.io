@@ -35,6 +35,10 @@ export default {
         title: '网络',
         path: '/base/network',
       },
+      {
+        title: '数组扁平化',
+        path: '/base/array-flat',
+      },
     ],
   },
 };
