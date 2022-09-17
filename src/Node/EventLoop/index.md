@@ -172,3 +172,41 @@ process.nextTick(() => {
 // setTimeout2 promise2
 // setImmediate1 promise3
 ```
+
+## 易错题
+
+1.
+
+```js
+<div id="btn"></div>;
+
+window.btn.addEventlistener('click', () => {
+  Promise.resolve('M1').then((res) => console.log(res));
+  console.log('L1');
+});
+
+window.btn.addEventlistener('click', () => {
+  Promise.resolve('M2').then((res) => console.log(res));
+  console.log('L2');
+});
+
+// btn.click() // 求加上这行和去掉这行之后的 打印结果
+```
+
+2.
+
+```js
+<a id="link" href="//www.baidu.com">
+  是否跳转
+</a>;
+
+let nextTick = new Promise(function (resolve) {
+  window.link.addEventlistener('click', resvole, { once: true });
+});
+nextTick.then((event) => {
+  event.preventDefault();
+  console.log('preventDefault');
+});
+
+// 求上面是否会阻止跳转？
+```
