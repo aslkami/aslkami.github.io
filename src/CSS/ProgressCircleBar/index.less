@@ -1,0 +1,38 @@
+.progress-circle-wrapper {
+  @width: var(--width);
+  @gap: var(--gap, '20px');
+  @contentWidth: calc(@width - @gap * 2);
+  position: relative;
+  width: @width;
+  height: @width;
+  border-radius: 50%;
+
+  .progress {
+    position: absolute;
+    width: @width;
+    height: @width;
+    border-radius: 50%;
+    clip: rect(0, @width, @width, calc((@width) / 2));
+  }
+
+  .progress-fill {
+    position: absolute;
+    width: @width;
+    height: @width;
+    border-radius: 50%;
+    clip: rect(0, calc((@width) / 2), @width, 0);
+  }
+
+  .progress-content {
+    position: absolute;
+    top: @gap;
+    left: @gap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: @contentWidth;
+    height: @contentWidth;
+    background-color: #fff;
+    border-radius: 50%;
+  }
+}

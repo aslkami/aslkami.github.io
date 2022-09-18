@@ -3,6 +3,7 @@ import NodeRoute from './src/Node/route';
 import OperationMaintenanceRoute from './src/OperationMaintenance/route';
 import PackToolRoute from './src/PackTool/route';
 import ReactRoute from './src/React/route';
+import CSSRoute from './src/CSS/route';
 
 export default {
   navs: [
@@ -11,6 +12,7 @@ export default {
     ...OperationMaintenanceRoute.navs,
     ...PackToolRoute.navs,
     ...ReactRoute.navs,
+    ...CSSRoute.navs,
     {
       title: '问题汇总',
       path: '/question',
