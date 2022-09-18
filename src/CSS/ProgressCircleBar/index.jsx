@@ -15,24 +15,26 @@ export default function ProgressCircleBar({
   const [style2, setStyle2] = useState({});
 
   useEffect(() => {
-    const p = parseFloat(percent);
-    if (p > 50) {
-      const deg = (360 / 200) * p + 'deg';
-      setStyle({
-        transform: `rotate(${deg})`,
-        transition: `all ease 1s`,
-      });
-      setStyle2({
-        transform: `rotate(${deg})`,
-        transition: `all ease 1s`,
-      });
-    } else {
-      const deg = (360 / 100) * p + 'deg';
-      setStyle({
-        transform: `rotate(${deg})`,
-        transition: `all ease 1s`,
-      });
-    }
+    setTimeout(() => {
+      const p = parseFloat(percent);
+      if (p > 50) {
+        const deg = (360 / 200) * p + 'deg';
+        setStyle({
+          transform: `rotate(${deg})`,
+          transition: `all ease 1s`,
+        });
+        setStyle2({
+          transform: `rotate(${deg})`,
+          transition: `all ease 1s`,
+        });
+      } else {
+        const deg = (360 / 100) * p + 'deg';
+        setStyle({
+          transform: `rotate(${deg})`,
+          transition: `all ease 1s`,
+        });
+      }
+    }, 0);
   }, [percent]);
 
   return (
