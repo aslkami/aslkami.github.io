@@ -1,7 +1,7 @@
 .progress-circle-wrapper {
-  @width: var(--width);
-  @gap: var(--gap, '20px');
-  @contentWidth: calc(@width - @gap * 2);
+  @width: var(--width, 200px);
+  @gap: var(--gap, 20px);
+  @contentWidth: calc(@width - (@gap * 2));
   position: relative;
   width: @width;
   height: @width;
