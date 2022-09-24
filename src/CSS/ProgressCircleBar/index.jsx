@@ -42,10 +42,10 @@ export default function ProgressCircleBar({
 
     return () => {
       setStyle({
-        transition: 'unset',
+        // transition: 'unset',
       });
       setStyle2({
-        transition: 'unset',
+        // transition: 'unset',
       });
     };
   }, [percent]);
