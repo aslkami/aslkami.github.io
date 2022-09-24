@@ -16,37 +16,35 @@ export default function ProgressCircleBar({
   const p = Math.min(parseFloat(percent), 100);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (p > 50) {
-        const deg = (360 / 100) * p;
-        const perDegTime = 1 / deg;
-        setStyle({
-          transform: `rotate(${180}deg)`,
-          transition: `all linear ${180 * perDegTime}s`,
-          // transition: `all ease 1s`,
-        });
-        setStyle2({
-          transform: `rotate(${deg - 180}deg)`,
-          transition: `all linear ${(deg - 180) * perDegTime}s`,
-          transitionDelay: `${180 * perDegTime}s`,
-          // transitionDelay: `1s`,
-        });
-      } else {
-        const deg = (360 / 100) * p + 'deg';
-        setStyle({
-          transform: `rotate(${deg})`,
-          transition: `all ease 1s`,
-        });
-      }
-    }, 0);
+    Promise.resolve().then(() => {
+      setTimeout(() => {
+        if (p > 50) {
+          const deg = (360 / 100) * p;
+          const perDegTime = 1 / deg;
+          setStyle({
+            transform: `rotate(${180}deg)`,
+            transition: `all linear ${180 * perDegTime}s`,
+            // transition: `all ease 1s`,
+          });
+          setStyle2({
+            transform: `rotate(${deg - 180}deg)`,
+            transition: `all linear ${(deg - 180) * perDegTime}s`,
+            transitionDelay: `${180 * perDegTime}s`,
+            // transitionDelay: `1s`,
+          });
+        } else {
+          const deg = (360 / 100) * p + 'deg';
+          setStyle({
+            transform: `rotate(${deg})`,
+            transition: `all ease 1s`,
+          });
+        }
+      }, 50);
+    });
 
     return () => {
-      setStyle({
-        // transition: 'unset',
-      });
-      setStyle2({
-        // transition: 'unset',
-      });
+      setStyle({});
+      setStyle2({});
     };
   }, [percent]);
 
