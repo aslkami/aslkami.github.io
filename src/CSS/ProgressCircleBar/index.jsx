@@ -13,33 +13,46 @@ export default function ProgressCircleBar({
 }) {
   const [style, setStyle] = useState({});
   const [style2, setStyle2] = useState({});
+  const p = Math.min(parseFloat(percent), 100);
 
   useEffect(() => {
-    setTimeout(() => {
-      const p = parseFloat(percent);
-      if (p > 50) {
-        const deg = (360 / 200) * p + 'deg';
-        setStyle({
-          transform: `rotate(${deg})`,
-          transition: `all ease 1s`,
-        });
-        setStyle2({
-          transform: `rotate(${deg})`,
-          transition: `all ease 1s`,
-        });
-      } else {
-        const deg = (360 / 100) * p + 'deg';
-        setStyle({
-          transform: `rotate(${deg})`,
-          transition: `all ease 1s`,
-        });
-      }
-    }, 0);
+    if (p > 50) {
+      const deg = (360 / 100) * p;
+      const perDegTime = 1 / deg;
+      setStyle({
+        transform: `rotate(${180}deg)`,
+        transition: `all linear ${180 * perDegTime}s`,
+        // transition: `all ease 1s`,
+      });
+      setStyle2({
+        transform: `rotate(${deg - 180}deg)`,
+        transition: `all linear ${(deg - 180) * perDegTime}s`,
+        transitionDelay: `${180 * perDegTime}s`,
+        // transitionDelay: `1s`,
+      });
+    } else {
+      const deg = (360 / 100) * p + 'deg';
+      setStyle({
+        transform: `rotate(${deg})`,
+        transition: `all ease 1s`,
+      });
+    }
+
+    return () => {
+      setStyle({
+        transition: 'unset',
+      });
+      setStyle2({
+        transition: 'unset',
+      });
+    };
   }, [percent]);
 
   return (
     <div
-      className={classNames('progress-circle-wrapper', className)}
+      className={classNames('progress-circle-wrapper', className, {
+        'gt-50': p > 50,
+      })}
       style={{
         '--width': `${parseFloat(width)}px`,
         backgroundColor: inactiveColor,
@@ -55,11 +68,16 @@ export default function ProgressCircleBar({
         ></div>
       </div>
       {parseFloat(percent) > 50 && (
-        <div className="progress outer" style={style2}>
+        <div
+          className="progress outer"
+          style={{
+            left: (width / 2) % 2 === 0 ? '1px' : '0.5px', // 解决中间虚线剪裁问题
+          }}
+        >
           <div
             className="progress-fill"
             style={{
-              ...style,
+              ...style2,
               backgroundColor: activeColor,
             }}
           ></div>

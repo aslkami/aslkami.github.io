@@ -36,3 +36,22 @@
     border-radius: 50%;
   }
 }
+
+.progress-circle-wrapper.gt-50 {
+  @width: var(--width, 200px);
+  .progress.outer {
+    clip: rect(0, calc((@width) / 2), @width, 0);
+    .progress-fill {
+      clip: rect(0, @width, @width, calc((@width) / 2));
+    }
+  }
+
+  .verticle-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: @width;
+    transform: translateX(-50%);
+  }
+}
