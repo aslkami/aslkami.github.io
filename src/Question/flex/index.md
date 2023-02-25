@@ -18,7 +18,7 @@
 
 - demo
 
-<code src="./flex_antd_tabs.jsx" />
+<!-- <code src="./flex_antd_tabs.jsx" /> -->
 
 - 需要注意的是 `.ant-tabs-tabpane` 布局 是 `flex: none`，意味着超出容器高度，将会超出容器展示，不会被包裹，所以需要指定 `container` 的高度
 

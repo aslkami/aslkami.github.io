@@ -13,6 +13,10 @@ export default {
     ...PackToolRoute.navs,
     ...ReactRoute.navs,
     ...CSSRoute.navs,
+    // {
+    //   title: 'TS',
+    //   path: '/typescript',
+    // },
     {
       title: '问题汇总',
       path: '/question',
@@ -22,7 +26,7 @@ export default {
       path: 'https://aslkami-vue.netlify.app/',
     },
     {
-      title: '博客',
+      title: '隐秘的角落',
       children: [
         {
           title: 'gatsby 博客',
@@ -36,11 +40,15 @@ export default {
           title: '基金学习',
           path: '/fund',
         },
+        {
+          title: '掘金',
+          path: 'https://juejin.cn/user/536217405113208',
+        },
+        {
+          title: 'GitHub',
+          path: 'https://github.com/aslkami/aslkami.github.io',
+        },
       ],
-    },
-    {
-      title: 'GitHub',
-      path: 'https://github.com/aslkami/aslkami.github.io',
     },
   ],
   menus: {

@@ -1,0 +1,30 @@
+.water-wave-wrapper {
+  height: 100px;
+  // width: 200px;
+}
+
+.ripple-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.ripple-effect {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: scale(0);
+  animation: ripple 0.4s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}

@@ -120,7 +120,7 @@
 
 ![libuv2](/images/node/nodelibuv2.jpeg)
 
-![nodEeventloop](/images/node/nodEeventloop.jpeg)
+<!-- ![nodEeventloop](/images/node/nodEeventloop.jpeg) -->
 
 - poll 阶段
   - 检测 Poll 队列中是否为空，如果不为空则执行队列中的任务，直到超时或者全部执行完毕。
