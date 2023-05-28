@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Form, Cascader } from 'antd';
+import { Form, Cascader, Select } from 'antd';
 
 function flatten(source = []) {
   let arr = [];
@@ -48,13 +48,14 @@ export default function InputCallbackSeletor({ mountNode }) {
     },
   ]);
 
+  const [selectNode, setSelectNode] = useState(mountNode);
+
   const flattenOptions = useRef(flatten(options));
 
   const [form] = Form.useForm();
   const searchVal = useRef('');
 
   const handleSearch = (value) => {
-    console.log(value);
     searchVal.current = value;
   };
 
@@ -62,6 +63,11 @@ export default function InputCallbackSeletor({ mountNode }) {
     const opt = flattenOptions.current.find((item) => item.label === mountNode);
     if (opt) {
       if (opt.children) {
+        const isExist = opt.children.some((item) => item.value === child.value);
+        if (isExist) {
+          console.error('存在相同的选项');
+          return;
+        }
         opt.children.push(child);
       } else {
         opt.children = [child];
@@ -84,7 +90,7 @@ export default function InputCallbackSeletor({ mountNode }) {
           value: searchVal.current,
           children: [],
         };
-        addItem(mountNode, child);
+        addItem(selectNode, child);
         console.log(options);
         searchVal.current = '';
       }
@@ -93,12 +99,20 @@ export default function InputCallbackSeletor({ mountNode }) {
     ele.addEventListener('keydown', onKeyDown);
 
     return () => ele.removeEventListener('keydown', onKeyDown);
-  }, []);
+  }, [selectNode]);
 
   return (
     <Form form={form}>
+      <Form.Item label="选择挂载的节点" name="selectNode">
+        <Select
+          value={selectNode}
+          options={flattenOptions.current}
+          onChange={(node, opt) => {
+            setSelectNode(opt.label);
+          }}
+        />
+      </Form.Item>
       <Form.Item label="输入回填" name="callback">
-        {/* <Select mode="tags" options={options} /> */}
         <Cascader
           className="my-cascader"
           options={options}
