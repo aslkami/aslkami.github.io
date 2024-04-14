@@ -9,6 +9,8 @@ order: 1
 
 附上学习视频 [力哥基金生财一课通](https://www.bilibili.com/video/BV1aJ411P7km?p=1&vd_source=8acdf1a3918e4334e0aeeb2a9dd4baa6)
 
+不过是 2017 年的
+
 ## 何为基金
 
 基金为信托产品。
