@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm install --legacy-peer-deps
-      - run: npm run docs:build
+      - run: npx -p node@16.8.0 npm install --legacy-peer-deps
+      - run: npx -p node@16.8.0 npm run docs:build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
