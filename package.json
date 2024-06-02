@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "scripts": {
     "start": "npx -p node@16.8.0 dumi dev",
-    "docs:build": "dumi build",
+    "docs:build": "npx -p node@16.8.0 dumi build",
     "docs:deploy": "gh-pages -d docs-dist",
-    "build": "father-build",
+    "build": "npx -p node@16.8.0 father-build",
     "deploy": "npm run docs:build && npm run docs:deploy",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
@@ -27,10 +27,11 @@
     ]
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.7",
     "ahooks": "^3.8.0",
     "antd": "^4.19.1",
     "classnames": "^2.3.2",
-    "react": "^16.12.0 || ^17.0.0",
+    "react": "^16.12.0 || ^17.0.0 || ^18.*.*",
     "tapable": "^2.2.1"
   },
   "devDependencies": {
