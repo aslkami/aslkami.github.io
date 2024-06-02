@@ -3,7 +3,7 @@
   "name": "dumi-doc",
   "version": "1.0.0",
   "scripts": {
-    "start": "npx -p node@16.8.0 dumi dev",
+    "start": "dumi dev",
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d docs-dist",
     "build": "father-build",
