@@ -37,7 +37,7 @@ export default {
           path: 'https://aslkami.netlify.app',
         },
         {
-          title: '基金学习',
+          title: '投资理财',
           path: '/fund',
         },
         {
