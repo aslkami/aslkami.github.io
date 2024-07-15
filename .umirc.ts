@@ -8,11 +8,11 @@ export default defineConfig({
   metas: [
     {
       name: 'keywords',
-      content: 'dumi, umijs, aslkami, 安了个装, 樂下独舞',
+      content: 'dumi, umijs, aslkami, 安了个装, 樂下独舞, 七步定投',
     },
     {
       name: 'description',
-      content: 'dumi, 记录个人js知识点',
+      content: 'dumi, 记录个人js知识点, 七步定投',
     },
   ],
   outputPath: 'docs-dist',

@@ -41,6 +41,10 @@ export default {
           path: '/fund',
         },
         {
+          title: '保险',
+          path: '/insurance',
+        },
+        {
           title: '掘金',
           path: 'https://juejin.cn/user/536217405113208',
         },
