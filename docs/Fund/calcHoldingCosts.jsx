@@ -31,7 +31,10 @@ export default function calcHoldingCosts() {
                   const { initPrice, initNum, price, num } = fields;
                   const total = initPrice * initNum + price * num;
                   const allNum = Number(initNum) + Number(num);
-                  const value = (total / allNum).toFixed(3);
+                  let value = (total / allNum).toFixed(3);
+                  if (isNaN(value)) {
+                    value = '0.00';
+                  }
                   setResult(value);
                 } catch (error) {
                   setResult('0.00');

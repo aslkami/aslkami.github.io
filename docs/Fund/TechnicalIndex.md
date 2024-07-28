@@ -141,8 +141,70 @@ MACD 适合长线交易，可结合支撑线做参考，不适合短期投资，
 - 顶背离，股价疯涨，指标逐渐减弱，说明股价可能过高，要尽快离场
 - 底背离，股价下降，指标逐渐增强，说明可能是个抄底的时候
 - 弊端还是可能会出现 频繁交易的可能，还是要搭配其它指标如 移动平均线
-  - CCI 买入
+  - 判断 CCI 是否处于[-100, 100] 买入
   - 移动平均线卖出
   - K 线止损
   - CCI 上下穿插的节点，可以作为画参考趋势线的节点
   - 把参考周期设置为 20 天的话，会发现 RSI、KDJ 的 J 线、CCI 都差不多
+
+### SAR (Parabolic Stop and Reverse)
+
+中文叫，抛物线转向指标，停损点转向指标，快速反映趋势的反转
+
+[传送门](https://www.bilibili.com/video/BV1RZ4y1m7ns/?spm_id_from=333.788.top_right_bar_window_history.content.click&vd_source=8acdf1a3918e4334e0aeeb2a9dd4baa6)
+
+- 可用于判断趋势，属于短线指标之一
+- SAR 在下边，趋势向上， SAR 在上面趋势向下，距离 K 线越远，幅度越大
+- 用法（适合单边趋势）
+  - 判断趋势，做多做空
+  - 判断止损，趋势向上时买入的点即为止损点
+  - 可搭配 20 日平均线作为快线， 50 日平均线作为慢线，快线穿过慢线即可买入
+  - 也可以搭配 MACD 黄金交叉并且 在 20 日 k 线上 作为买入点， SAR 作为止损点
+
+### W 底 M 顶 + 头肩顶头肩底
+
+[W 底 M 顶](https://www.bilibili.com/video/BV1Ua411h7ZM/?spm_id_from=333.999.0.0&vd_source=8acdf1a3918e4334e0aeeb2a9dd4baa6)
+
+[头肩顶头肩底](https://www.bilibili.com/video/BV1sZ4y167ab/?spm_id_from=333.999.0.0&vd_source=8acdf1a3918e4334e0aeeb2a9dd4baa6)
+
+### 仙人指路和墓碑线
+
+[看清主力震仓](https://www.bilibili.com/video/BV1tT4y167z3/?spm_id_from=333.999.0.0&vd_source=8acdf1a3918e4334e0aeeb2a9dd4baa6)
+
+### OBV (on balance volume)
+
+中文叫能量潮，也称之为 交易量净额或平衡交易量
+
+是一种搭配 成交量和价格来判断或预测价格未来走向的一种指标
+
+新手看价、老手看量
+
+[OBV](https://www.bilibili.com/video/BV1VS4y1B7Tt/?spm_id_from=333.999.0.0&vd_source=8acdf1a3918e4334e0aeeb2a9dd4baa6)
+
+算法：
+
+上涨 成交量相加，下跌则 把之前的累积总和 减去 成交量
+
+- 仍旧是 黄金交叉买入，死亡交叉卖出
+- 依旧是顶背离底背离
+
+### WR (威廉指标)
+
+[WR](https://www.bilibili.com/video/BV1YC411W7r2/?spm_id_from=333.999.0.0&vd_source=8acdf1a3918e4334e0aeeb2a9dd4baa6)
+
+是一种短期的 超买超卖指标，也是需要搭配 MA MACD 等指标
+
+```shell
+%R = (过去N日的最高价 - 当天收盘价) / (过去N日最高价 - 过去N日最低价) * 100
+```
+
+- [-80, -20], -80 属于以下超卖区， -20 以上属于超买区， -50 是分水岭，不同交易软件指标值的含义可能不一样
+- 和 RSI 的区别是，WR 没有背离情况，WR 波动也算频密，某些时刻比 RSI 好使
+
+### VOL 成交量
+
+[VOL](https://www.bilibili.com/video/BV1zw4m1Q7av/?spm_id_from=333.999.0.0&vd_source=8acdf1a3918e4334e0aeeb2a9dd4baa6)
+
+- 计算方式 = 买入数量 + 卖出数量
+- 成交量可配合价格走势判断
+- 成交量在各种市场、各种技术指标之间都有一定的参考作用
