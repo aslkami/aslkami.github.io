@@ -7,7 +7,7 @@ export default function calcHoldingCosts() {
 
   return (
     <>
-      <h2>计算目标持仓成本</h2>
+      <h2>计算加仓后成本</h2>
       <Form form={form}>
         <Form.Item label="初始持仓" name="initPrice">
           <Input />
