@@ -54,6 +54,7 @@ export default function calcHoldingCostsRecovery() {
       title: '当前持仓金额',
       dataIndex: 'afterPrice',
       render(text) {
+        if (text === 'infinity') return '∞';
         return (+text).toFixed(3);
       },
     },
@@ -65,7 +66,23 @@ export default function calcHoldingCostsRecovery() {
       title: '当前持仓总价',
       dataIndex: 'afterTotal',
       render(t, record) {
+        if (record.afterPrice === 'infinity') return '∞';
         return (+record.afterPrice * +record.afterAmount).toFixed(0);
+      },
+    },
+    {
+      title: '获利',
+      dataIndex: 'profit',
+      render(t, record) {
+        if (record.method === 1) {
+          return null;
+        }
+
+        const sellTotal = (+record.price * +record.amount).toFixed(0);
+        const holdTotal = (+record.beforePrice * +record.amount).toFixed(0);
+        const result = sellTotal - holdTotal;
+        if (result === 0) return result;
+        return <div style={{ color: result > 0 ? 'red' : 'green' }}>{result}</div>;
       },
     },
   ];
@@ -80,7 +97,9 @@ export default function calcHoldingCostsRecovery() {
       return (bt / getAmount(m, ba, aa)).toFixed(3);
     } else {
       const bt = b * ba - a * aa;
-      return (bt / getAmount(m, ba, aa)).toFixed(3);
+      const amount = getAmount(m, ba, aa);
+      if (amount === 0) return 'infinity';
+      return (bt / amount).toFixed(3);
     }
   };
 
@@ -102,6 +121,7 @@ export default function calcHoldingCostsRecovery() {
       lastAmount: initAmount,
     };
     for (let item of info) {
+      if (!item.price || !item.amount) continue;
       const afterPrice = getPrice(
         item.method,
         lastRecord.lastPrice,
@@ -117,8 +137,8 @@ export default function calcHoldingCostsRecovery() {
         method: item.method,
         price: item.price,
         amount: item.amount,
-        afterPrice,
-        afterAmount,
+        afterPrice: afterPrice,
+        afterAmount: afterAmount,
       };
       lastRecord.lastPrice = afterPrice;
       lastRecord.lastAmount = afterAmount;
@@ -164,7 +184,7 @@ export default function calcHoldingCostsRecovery() {
                 ))}
                 <Form.Item>
                   <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                    Add field
+                    添加买卖条件
                   </Button>
                 </Form.Item>
               </>
@@ -189,7 +209,46 @@ export default function calcHoldingCostsRecovery() {
         </Form.Item>
       </Form>
 
-      {result.length > 0 && <Table dataSource={result} columns={columns} pagination={false} />}
+      {result.length > 0 && (
+        <Table
+          dataSource={result}
+          columns={columns}
+          pagination={false}
+          summary={(pageData) => {
+            let total = 0;
+            pageData.forEach((record) => {
+              if (record.method === 1) return;
+              const sellTotal = (+record.price * +record.amount).toFixed(0);
+              const holdTotal = (+record.beforePrice * +record.amount).toFixed(0);
+              const result = sellTotal - holdTotal;
+              total += result;
+            });
+            return (
+              <>
+                <Table.Summary.Row>
+                  <Table.Summary.Cell index={0}>合计获利</Table.Summary.Cell>
+                  <Table.Summary.Cell index={1} />
+                  <Table.Summary.Cell index={2} />
+                  <Table.Summary.Cell index={3} />
+                  <Table.Summary.Cell index={4} />
+                  <Table.Summary.Cell index={5} />
+                  <Table.Summary.Cell index={6} />
+                  <Table.Summary.Cell index={7} />
+                  <Table.Summary.Cell index={8} />
+                  <Table.Summary.Cell index={9} />
+                  <Table.Summary.Cell index={10}>
+                    {total === 0 ? (
+                      0
+                    ) : (
+                      <div style={{ color: total > 0 ? 'red' : 'green' }}>{total}</div>
+                    )}
+                  </Table.Summary.Cell>
+                </Table.Summary.Row>
+              </>
+            );
+          }}
+        />
+      )}
     </>
   );
 }
