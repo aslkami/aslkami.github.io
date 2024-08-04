@@ -120,6 +120,7 @@ export default function calcHoldingCostsRecovery() {
       lastPrice: initPrice,
       lastAmount: initAmount,
     };
+    info.sort((a, b) => a.method - b.method);
     for (let item of info) {
       if (!item.price || !item.amount) continue;
       const afterPrice = getPrice(
@@ -132,8 +133,8 @@ export default function calcHoldingCostsRecovery() {
 
       const afterAmount = getAmount(item.method, lastRecord.lastAmount, item.amount);
       const current = {
-        beforePrice: lastRecord.lastPrice,
-        beforeAmount: lastRecord.lastAmount,
+        beforePrice: item.method === -1 ? initPrice : lastRecord.lastPrice,
+        beforeAmount: item.method === -1 ? initAmount : lastRecord.lastAmount,
         method: item.method,
         price: item.price,
         amount: item.amount,
@@ -149,7 +150,7 @@ export default function calcHoldingCostsRecovery() {
 
   return (
     <>
-      <h2>计算买卖持仓成本</h2>
+      <h2>计算当天买卖持仓成本</h2>
       <Form form={form} style={{ width: '50vw' }}>
         <Form.Item label="初始持仓" name="initPrice">
           <Input />
