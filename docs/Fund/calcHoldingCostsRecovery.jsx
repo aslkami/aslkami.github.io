@@ -54,19 +54,23 @@ export default function calcHoldingCostsRecovery() {
       title: '当前持仓金额',
       dataIndex: 'afterPrice',
       render(text) {
-        if (text === 'infinity') return '∞';
+        if (text === 0) return '∞';
         return (+text).toFixed(3);
       },
     },
     {
       title: '当前持仓份额',
       dataIndex: 'afterAmount',
+      render(t) {
+        if (t === 0) return '∞';
+        return t;
+      },
     },
     {
       title: '当前持仓总价',
       dataIndex: 'afterTotal',
       render(t, record) {
-        if (record.afterPrice === 'infinity') return '∞';
+        if (record.afterPrice === 0) return '∞';
         return (+record.afterPrice * +record.afterAmount).toFixed(0);
       },
     },
@@ -98,7 +102,7 @@ export default function calcHoldingCostsRecovery() {
     } else {
       const bt = b * ba - a * aa;
       const amount = getAmount(m, ba, aa);
-      if (amount === 0) return 'infinity';
+      if (amount === 0) return 0;
       return (bt / amount).toFixed(3);
     }
   };
@@ -123,7 +127,7 @@ export default function calcHoldingCostsRecovery() {
     info.sort((a, b) => a.method - b.method);
     for (let item of info) {
       if (!item.price || !item.amount) continue;
-      const afterPrice = getPrice(
+      let afterPrice = getPrice(
         item.method,
         lastRecord.lastPrice,
         lastRecord.lastAmount,
@@ -132,13 +136,22 @@ export default function calcHoldingCostsRecovery() {
       );
 
       const afterAmount = getAmount(item.method, lastRecord.lastAmount, item.amount);
+
+      if (item.method === -1) {
+        afterPrice = initPrice;
+        lastRecord.lastPrice = initPrice;
+        if (afterAmount === 0) {
+          afterPrice = 0;
+          lastRecord.lastPrice = 0;
+        }
+      }
       const current = {
         beforePrice: item.method === -1 ? initPrice : lastRecord.lastPrice,
-        beforeAmount: item.method === -1 ? initAmount : lastRecord.lastAmount,
+        beforeAmount: lastRecord.lastAmount,
         method: item.method,
         price: item.price,
         amount: item.amount,
-        afterPrice: afterPrice,
+        afterPrice: item.method === -1 ? lastRecord.lastPrice : afterPrice,
         afterAmount: afterAmount,
       };
       lastRecord.lastPrice = afterPrice;
