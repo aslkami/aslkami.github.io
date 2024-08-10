@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
-import { Input, Form, Button, Space, Select, Table } from 'antd';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Input, Form, Button, Space, Select, Table, Card } from 'antd';
+import { MinusCircleOutlined, PlusOutlined, CloseOutlined } from '@ant-design/icons';
+
+const sharedOnCell = (_, index) => {
+  if (_.day) {
+    return {
+      colSpan: 0,
+    };
+  }
+  return {};
+};
 
 export default function calcHoldingCostsRecovery() {
   const [form] = Form.useForm();
@@ -10,17 +19,28 @@ export default function calcHoldingCostsRecovery() {
     {
       title: '初始持仓金额',
       dataIndex: 'beforePrice',
-      render(text) {
+      onCell: (row) => {
+        if (row.day) {
+          return {
+            colSpan: 11,
+          };
+        }
+        return {};
+      },
+      render(text, row) {
+        if (row.day) return <span style={{ color: 'mediumvioletred' }}>{row.day}</span>;
         return (+text).toFixed(3);
       },
     },
     {
       title: '初始持仓份额',
       dataIndex: 'beforeAmount',
+      onCell: sharedOnCell,
     },
     {
       title: '初始持仓总价',
       dataIndex: 'beforeTotal',
+      onCell: sharedOnCell,
       render(t, record) {
         return (+record.beforePrice * +record.beforeAmount).toFixed(0);
       },
@@ -28,6 +48,7 @@ export default function calcHoldingCostsRecovery() {
     {
       title: '方式',
       dataIndex: 'method',
+      onCell: sharedOnCell,
       render(text) {
         return text === 1 ? '买入' : '卖出';
       },
@@ -35,6 +56,7 @@ export default function calcHoldingCostsRecovery() {
     {
       title: '金额',
       dataIndex: 'price',
+      onCell: sharedOnCell,
       render(text) {
         return (+text).toFixed(3);
       },
@@ -46,6 +68,7 @@ export default function calcHoldingCostsRecovery() {
     {
       title: '总价',
       dataIndex: 'total',
+      onCell: sharedOnCell,
       render(t, record) {
         return (+record.price * +record.amount).toFixed(0);
       },
@@ -53,6 +76,7 @@ export default function calcHoldingCostsRecovery() {
     {
       title: '当前持仓金额',
       dataIndex: 'afterPrice',
+      onCell: sharedOnCell,
       render(text) {
         if (text === 0) return '∞';
         return (+text).toFixed(3);
@@ -61,6 +85,7 @@ export default function calcHoldingCostsRecovery() {
     {
       title: '当前持仓份额',
       dataIndex: 'afterAmount',
+      onCell: sharedOnCell,
       render(t) {
         if (t === 0) return '∞';
         return t;
@@ -69,6 +94,7 @@ export default function calcHoldingCostsRecovery() {
     {
       title: '当前持仓总价',
       dataIndex: 'afterTotal',
+      onCell: sharedOnCell,
       render(t, record) {
         if (record.afterPrice === 0) return '∞';
         return (+record.afterPrice * +record.afterAmount).toFixed(0);
@@ -77,6 +103,7 @@ export default function calcHoldingCostsRecovery() {
     {
       title: '获利',
       dataIndex: 'profit',
+      onCell: sharedOnCell,
       render(t, record) {
         if (record.method === 1) {
           return null;
@@ -119,45 +146,56 @@ export default function calcHoldingCostsRecovery() {
     const { initPrice, initAmount, info } = form.getFieldsValue();
     if (!initPrice || !initAmount) return;
 
-    const allRecord = [];
     let lastRecord = {
       lastPrice: initPrice,
       lastAmount: initAmount,
     };
-    info.sort((a, b) => a.method - b.method);
-    for (let item of info) {
-      if (!item.price || !item.amount) continue;
-      let afterPrice = getPrice(
-        item.method,
-        lastRecord.lastPrice,
-        lastRecord.lastAmount,
-        item.price,
-        item.amount,
-      );
 
-      const afterAmount = getAmount(item.method, lastRecord.lastAmount, item.amount);
+    const allRecord = [];
+    const getRecord = (eachCondition, index) => {
+      eachCondition.sort((a, b) => a.method - b.method);
+      const eachRecord = [{ day: `第${index + 1}天` }];
+      for (let item of eachCondition) {
+        if (!item.price || !item.amount) continue;
+        let afterPrice = getPrice(
+          item.method,
+          lastRecord.lastPrice,
+          lastRecord.lastAmount,
+          item.price,
+          item.amount,
+        );
 
-      if (item.method === -1) {
-        afterPrice = initPrice;
-        lastRecord.lastPrice = initPrice;
-        if (afterAmount === 0) {
-          afterPrice = 0;
-          lastRecord.lastPrice = 0;
+        const afterAmount = getAmount(item.method, lastRecord.lastAmount, item.amount);
+
+        if (item.method === -1) {
+          afterPrice = initPrice;
+          lastRecord.lastPrice = initPrice;
+          if (afterAmount === 0) {
+            afterPrice = 0;
+            lastRecord.lastPrice = 0;
+          }
         }
+        const current = {
+          beforePrice: item.method === -1 ? initPrice : lastRecord.lastPrice,
+          beforeAmount: lastRecord.lastAmount,
+          method: item.method,
+          price: item.price,
+          amount: item.amount,
+          afterPrice: item.method === -1 ? lastRecord.lastPrice : afterPrice,
+          afterAmount: afterAmount,
+        };
+        lastRecord.lastPrice = afterPrice;
+        lastRecord.lastAmount = afterAmount;
+        eachRecord.push(current);
       }
-      const current = {
-        beforePrice: item.method === -1 ? initPrice : lastRecord.lastPrice,
-        beforeAmount: lastRecord.lastAmount,
-        method: item.method,
-        price: item.price,
-        amount: item.amount,
-        afterPrice: item.method === -1 ? lastRecord.lastPrice : afterPrice,
-        afterAmount: afterAmount,
-      };
-      lastRecord.lastPrice = afterPrice;
-      lastRecord.lastAmount = afterAmount;
-      allRecord.push(current);
+      return eachRecord;
+    };
+
+    for (let [index, infoItem] of info.entries()) {
+      const eachRecord = getRecord(infoItem.condition, index);
+      allRecord.push(...eachRecord);
     }
+
     setResult(allRecord);
   };
 
@@ -176,27 +214,83 @@ export default function calcHoldingCostsRecovery() {
           {(fields, { add, remove }) => {
             return (
               <>
-                {fields.map(({ key, name, ...restField }) => (
-                  <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                    <Form.Item {...restField} name={[name, 'method']} initialValue={1}>
-                      <Select
-                        style={{ width: '7.5vw' }}
-                        options={[
-                          { label: '买入', value: 1 },
-                          { label: '卖出', value: -1 },
-                        ]}
+                {fields.map(({ key, name }) => (
+                  <Card
+                    size="small"
+                    title={`第${name + 1}天`}
+                    key={key}
+                    style={{
+                      marginBottom: '12px',
+                    }}
+                    extra={
+                      <CloseOutlined
+                        onClick={() => {
+                          remove(name);
+                        }}
                       />
+                    }
+                  >
+                    <Form.Item label="">
+                      <Form.List name={[name, 'condition']}>
+                        {(subFields, { add: subAdd, remove: subRemove }) => {
+                          return (
+                            <>
+                              {subFields.map(({ key: subkey, name: subname, ...restField }) => {
+                                return (
+                                  <Space
+                                    key={subkey}
+                                    style={{ display: 'flex', marginBottom: 8 }}
+                                    align="baseline"
+                                  >
+                                    <Form.Item
+                                      {...restField}
+                                      name={[subname, 'method']}
+                                      initialValue={1}
+                                    >
+                                      <Select
+                                        style={{ width: '7.5vw' }}
+                                        options={[
+                                          { label: '买入', value: 1 },
+                                          { label: '卖出', value: -1 },
+                                        ]}
+                                      />
+                                    </Form.Item>
+                                    <Form.Item {...restField} name={[subkey, 'price']}>
+                                      <Input
+                                        style={{ width: '19vw' }}
+                                        placeholder="买入或卖出的金额"
+                                      />
+                                    </Form.Item>
+                                    <Form.Item {...restField} name={[subkey, 'amount']}>
+                                      <Input
+                                        style={{ width: '20vw' }}
+                                        placeholder="买入或卖出的数量"
+                                      />
+                                    </Form.Item>
+                                    <MinusCircleOutlined onClick={() => subRemove(subname)} />
+                                  </Space>
+                                );
+                              })}
+
+                              <Form.Item style={{ marginTop: '8px' }}>
+                                <Button
+                                  type="dashed"
+                                  onClick={() => subAdd()}
+                                  block
+                                  icon={<PlusOutlined />}
+                                >
+                                  添加子条件
+                                </Button>
+                              </Form.Item>
+                            </>
+                          );
+                        }}
+                      </Form.List>
                     </Form.Item>
-                    <Form.Item {...restField} name={[name, 'price']}>
-                      <Input style={{ width: '20vw' }} placeholder="买入或卖出的金额" />
-                    </Form.Item>
-                    <Form.Item {...restField} name={[name, 'amount']}>
-                      <Input style={{ width: '20vw' }} placeholder="买入或卖出的数量" />
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
-                  </Space>
+                  </Card>
                 ))}
-                <Form.Item>
+
+                <Form.Item style={{ marginTop: '12px' }}>
                   <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
                     添加买卖条件
                   </Button>
@@ -231,7 +325,7 @@ export default function calcHoldingCostsRecovery() {
           summary={(pageData) => {
             let total = 0;
             pageData.forEach((record) => {
-              if (record.method === 1) return;
+              if (record.method === 1 || record.day) return;
               const sellTotal = (+record.price * +record.amount).toFixed(0);
               const holdTotal = (+record.beforePrice * +record.amount).toFixed(0);
               const result = sellTotal - holdTotal;
