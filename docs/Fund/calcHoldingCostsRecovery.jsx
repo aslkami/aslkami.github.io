@@ -143,7 +143,7 @@ export default function calcHoldingCostsRecovery() {
   };
 
   const calc = () => {
-    const { initPrice, initAmount, info } = form.getFieldsValue();
+    let { initPrice, initAmount, info } = form.getFieldsValue();
     if (!initPrice || !initAmount) return;
 
     let lastRecord = {
@@ -186,6 +186,7 @@ export default function calcHoldingCostsRecovery() {
         };
         lastRecord.lastPrice = afterPrice;
         lastRecord.lastAmount = afterAmount;
+        initPrice = afterPrice;
         eachRecord.push(current);
       }
       return eachRecord;
