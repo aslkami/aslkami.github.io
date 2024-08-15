@@ -45,6 +45,10 @@ export default {
           path: '/insurance',
         },
         {
+          title: '计算器',
+          path: '/calculator',
+        },
+        {
           title: '掘金',
           path: 'https://juejin.cn/user/536217405113208',
         },

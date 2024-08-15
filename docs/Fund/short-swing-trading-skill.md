@@ -214,6 +214,10 @@ order: 26
 - [中国食品药品检定研究院](https://www.nifdc.org.cn/directory/web/nifdc/index.html?eqid=f1818c04000e2d76000000026492b674)
 - [看财报](https://www.kancaibao.com/)
 - [慧博投研资讯](http://www.hibor.org/)
+- [国家统计局](https://www.stats.gov.cn/)
+- [国家发改委](https://www.ndrc.gov.cn/)
+- [海关总署](http://www.customs.gov.cn/)
+- [人民银行](http://www.pbc.gov.cn/)
 
 ### 判断次日涨跌的 8 点诀窍
 
