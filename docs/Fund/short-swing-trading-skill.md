@@ -218,6 +218,11 @@ order: 26
 - [国家发改委](https://www.ndrc.gov.cn/)
 - [海关总署](http://www.customs.gov.cn/)
 - [人民银行](http://www.pbc.gov.cn/)
+- [萝卜投研](https://robo.datayes.com/)
+- [同花顺问财](https://www.iwencai.com/unifiedwap/home/index)
+- [东方财富](https://www.eastmoney.com/)
+- [财联社](https://www.cls.cn/)
+- [今日头条的财经栏目]
 
 ### 判断次日涨跌的 8 点诀窍
 
