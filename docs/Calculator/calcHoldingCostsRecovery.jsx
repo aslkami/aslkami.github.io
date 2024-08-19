@@ -152,9 +152,10 @@ export default function calcHoldingCostsRecovery() {
     };
 
     const allRecord = [];
+    let id = 1;
     const getRecord = (eachCondition, index) => {
       eachCondition.sort((a, b) => a.method - b.method);
-      const eachRecord = [{ day: `第${index + 1}天` }];
+      const eachRecord = [{ day: `第${index + 1}天`, id: `第${index + 1}天` }];
       for (let item of eachCondition) {
         if (!item.price || !item.amount) continue;
         let afterPrice = getPrice(
@@ -183,6 +184,7 @@ export default function calcHoldingCostsRecovery() {
           amount: item.amount,
           afterPrice: item.method === -1 ? lastRecord.lastPrice : afterPrice,
           afterAmount: afterAmount,
+          id: id++,
         };
         lastRecord.lastPrice = afterPrice;
         lastRecord.lastAmount = afterAmount;
@@ -239,7 +241,7 @@ export default function calcHoldingCostsRecovery() {
                               {subFields.map(({ key: subkey, name: subname, ...restField }) => {
                                 return (
                                   <Space
-                                    key={subkey}
+                                    key={`${key}-${subkey}`}
                                     style={{ display: 'flex', marginBottom: 8 }}
                                     align="baseline"
                                   >
@@ -256,13 +258,13 @@ export default function calcHoldingCostsRecovery() {
                                         ]}
                                       />
                                     </Form.Item>
-                                    <Form.Item {...restField} name={[subkey, 'price']}>
+                                    <Form.Item {...restField} name={[subname, 'price']}>
                                       <Input
                                         style={{ width: '19vw' }}
                                         placeholder="买入或卖出的金额"
                                       />
                                     </Form.Item>
-                                    <Form.Item {...restField} name={[subkey, 'amount']}>
+                                    <Form.Item {...restField} name={[subname, 'amount']}>
                                       <Input
                                         style={{ width: '20vw' }}
                                         placeholder="买入或卖出的数量"
@@ -321,6 +323,7 @@ export default function calcHoldingCostsRecovery() {
       {result.length > 0 && (
         <Table
           dataSource={result}
+          rowKey="id"
           columns={columns}
           pagination={false}
           summary={(pageData) => {
