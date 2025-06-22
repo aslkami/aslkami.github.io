@@ -45,6 +45,10 @@ export default {
           path: '/insurance',
         },
         {
+          title: 'Z哥',
+          path: '/zettaranc',
+        },
+        {
           title: '计算器',
           path: '/calculator',
         },
