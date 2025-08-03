@@ -6,7 +6,12 @@ order: 4
 ### 指标公式
 
 - 知行中期多空短线
+
   ```shell
+    M1:=3;
+    M2:=6;
+    M3:=12;
+    M4:=24;
     知行中期多空短线:EMA(EMA(C,10),10),COLORGREEN,LINETHICK1;
     MA1:MA(CLOSE,60);
     MA2:=EMA(CLOSE,13);
@@ -20,6 +25,7 @@ order: 4
     最低价:=LOW,COLORYELLOW,LINETHICK0;
     BBI:(MA(CLOSE,M1)+MA(CLOSE,M2)+MA(CLOSE,M3)+MA(CLOSE,M4))/4,COLORWHITE;
   ```
+
 - 单针 20
 
   ```shell
@@ -32,13 +38,17 @@ order: 4
     四线归零买:=IF((短期<=6 AND 中期<=6 AND 中长期<=6 AND 长期<=6),-30,0),STICK,COLOR0000FF,LINETHICK3;
     白线下20买:=IF(短期<=20 AND 长期>=60,-30,0),STICK,COLOR00FFFF,LINETHICK3;
     白穿红线买:=IF(((CROSS(短期,长期)AND 长期<20)),-30,0),STICK,COLOR00FF00,LINETHICK3;
-    白穿黄线买:=IF(((CROSS(短期,中期)AND 中期<30)),-30,0),STICK,COLORFF9150,LINETHICK3; 80,COLORYELLOW;
-  20,COLORYELLOW;
+    白穿黄线买:=IF(((CROSS(短期,中期)AND 中期<30)),-30,0),STICK,COLORFF9150,LINETHICK3;
+    80,COLORYELLOW;
+    20,COLORYELLOW;
   ```
 
 - 自定义 KDJ
 
   ```shell
+    N:=9;
+    M1:=3;
+    M2:=3;
     VAR1:=HHV(HIGH,N);
     VAR2:=LLV(LOW,N);
     RSV:=(CLOSE-VAR2)/(VAR1-VAR2)*100;
@@ -106,7 +116,7 @@ order: 4
     J:=12;
     R:=21;
     N1:=3;
-    N2:=21
+    N2:=21;
     RSV值:=(C-LLV(L,9))/(HHV(H,9)-LLV(L,9))*100;
     K值:=SMA(RSV值,3,1);
     D值:=SMA(K值,3,1);
@@ -123,21 +133,15 @@ order: 4
 - RSI 选股
 
   ```shell
-    J:=12;
-    R:=21;
     N1:=3;
-    N2:=21
-    RSV值:=(C-LLV(L,9))/(HHV(H,9)-LLV(L,9))*100;
-    K值:=SMA(RSV值,3,1);
-    D值:=SMA(K值,3,1);
-    J值:=3*K值-2*D值;
+    N2:=21;
+    N3:=3;
+    R:=30;
     短期:=100*(C-LLV(L,N1))/(HHV(C,N1)-LLV(L,N1)),COLORBLUE;
     长期:=100*(C-LLV(L,N2))/(HHV(C,N2)-LLV(L,N2)),COLORRED,LINETHICK2;
     LC:=REF(CLOSE,1);
-    自定义RSI:=SMA(MAX(CLOSE-LC,0),N3,1)/SMA(ABS(CLOSE-LC),N3,1)*100;
-    红白线接近零:=长期<10 AND 短期<10;
-    红白线:=短期<=长期 OR 红白线接近零;
-    J值<J AND 自定义RSI<R;
+    RSI3:=SMA(MAX(CLOSE-LC,0),N3,1)/SMA(ABS(CLOSE-LC),N3,1)*100;
+    长期>=45 AND 短期<=30 AND RSI3<=R;
   ```
 
 - N 型回调
@@ -209,3 +213,7 @@ order: 4
   { 综合选股条件 }
   选股: 市值条件 AND 基本面稳定 AND 高ROE AND 现金充足;
   ```
+
+```
+
+```
