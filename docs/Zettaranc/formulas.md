@@ -68,6 +68,7 @@ order: 4
   ```
 
 - 自定义 RSI
+
   ```shell
     N1:=3;
     N2:=3;
@@ -79,6 +80,51 @@ order: 4
     20,COLORCYAN;
     80,COLORRED;
   ```
+
+- 新多空
+
+```shell
+知行短期趋势线:EMA(EMA(C,10),10),COLORCYAN,LINETHICK1;
+MA1:=MA(CLOSE,60);
+MA2:=EMA(CLOSE,13);
+
+Z1:=STRCAT(HYBLOCK,' ');
+Z2:=STRCAT(Z1,DYBLOCK);
+Z3:=STRCAT(Z2,' ');
+DRAWTEXT_FIX(ISLASTBAR,0,0,0,STRCAT(Z3,GNBLOCK)),COLORYELLOW;
+
+M1:=14;
+M2:=28;
+M3:=57;
+M4:=114;
+
+知行多空线:(MA(CLOSE,M1)+MA(CLOSE,M2)+MA(CLOSE,M3)+MA(CLOSE,M4))/4,COLORLIMAGENTA;
+
+
+MA60:MA(CLOSE,60),COLORWHITE;
+```
+
+- 转型图
+
+```shell
+VAR1A:=(HHV(HIGH,4)-CLOSE)/(HHV(HIGH,4)-LLV(LOW,4))*100-90;
+VAR2A:=SMA(VAR1A,4,1)+100;
+VAR3A:=(CLOSE-LLV(LOW,4))/(HHV(HIGH,4)-LLV(LOW,4))*100;
+VAR4A:=SMA(VAR3A,6,1);
+VAR5A:=SMA(VAR4A,6,1)+100;
+VAR6A:=VAR5A-VAR2A;
+砖型图:=IF(VAR6A>4,VAR6A-4,0),COLORRED;
+
+STICKLINE(REF(砖型图,1)<砖型图,砖型图,REF(砖型图,1),3,0),COLORRED;
+STICKLINE(REF(砖型图,1)>砖型图,砖型图,REF(砖型图,1),3,0),COLOR00FF00;
+红持绿空:=0,COLORGREEN;
+
+
+AA:=(REF(砖型图,1)<砖型图);
+BB:=REF(砖型图,1)>砖型图;
+CC:=REF(AA,1)=0 &&(AA=1);
+XG:=CC>0;
+```
 
 ### 选股公式
 
