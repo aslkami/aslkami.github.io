@@ -49,6 +49,10 @@ export default {
           path: '/zettaranc',
         },
         {
+          title: '福总',
+          path: '/fuzong',
+        },
+        {
           title: '计算器',
           path: '/calculator',
         },
